@@ -18,6 +18,6 @@
   "homepage": "https://github.com/NautilusOSS/arc200-snapshot#readme",
   "dependencies": {
     "algosdk": "^2.7.0",
-    "ulujs": "^0.2.16"
+    "ulujs": "^0.2.17"
   }
 }
