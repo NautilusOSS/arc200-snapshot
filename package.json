@@ -1,0 +1,23 @@
+{
+  "name": "arc200-snapshot",
+  "version": "1.0.0",
+  "description": "ARC200 Snapshot Script",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NautilusOSS/arc200-snapshot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NautilusOSS/arc200-snapshot/issues"
+  },
+  "homepage": "https://github.com/NautilusOSS/arc200-snapshot#readme",
+  "dependencies": {
+    "algosdk": "^2.7.0",
+    "ulujs": "^0.2.16"
+  }
+}
