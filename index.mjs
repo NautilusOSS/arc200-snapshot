@@ -38,6 +38,7 @@ const indexerClient = new algosdk.Indexer(
 const ci = new arc200(tokenId, algodClient, indexerClient);
 
 // get metadata
+
 const arc200_nameR = await ci.arc200_name();
 if (!arc200_nameR.success) {
   console.error("Error getting metadata");
@@ -53,9 +54,9 @@ const arc200_symbol = arc200_symbolR.returnValue;
 const arc200_decimalsR = await ci.arc200_decimals();
 if (!arc200_decimalsR.success) {
   console.error("Error getting metadata");
-  process.exit(1);
+  //process.exit(1);
 }
-const arc200_decimals = arc200_decimalsR.returnValue;
+const arc200_decimals = arc200_decimalsR?.returnValue || 0;
 const arc200_totalSupplyR = await ci.arc200_totalSupply();
 if (!arc200_totalSupplyR.success) {
   console.error("Error getting metadata");
@@ -75,16 +76,18 @@ if (!fs.existsSync("data")) {
   fs.mkdirSync("data");
 }
 
-// if arc200_Transfer.json does not exist then create it
-if (!fs.existsSync(`data/arc200_Transfer_${token.symbol}.json`)) {
+const filename = `data/arc200_Transfer_${token.symbol}-${token.tokenId}.json`
+
+// if file does not exist then create it
+if (!fs.existsSync(filename)) {
   fs.writeFileSync(
-    `data/arc200_Transfer_${token.symbol}.json`,
+    filename,
     JSON.stringify([])
   );
 }
 
 const stored_arc200_Transfer = JSON.parse(
-  fs.readFileSync(`data/arc200_Transfer_${token.symbol}.json`, "utf8")
+  fs.readFileSync(filename, "utf8")
 );
 
 const lastRound = stored_arc200_Transfer.reduce(
@@ -101,7 +104,7 @@ const arc200_TransferR = await ci.arc200_Transfer({
 stored_arc200_Transfer.push(...arc200_TransferR);
 
 fs.writeFileSync(
-  `data/arc200_Transfer_${token.symbol}.json`,
+  filename,
   JSON.stringify(
     stored_arc200_Transfer,
     (k, v) => (typeof v === "bigint" ? v.toString() : v),
@@ -142,8 +145,7 @@ if (roundStr && !addr) {
   for (const { account, amount } of snapshot) {
     let arc200_balanceOf = amount;
     if (amount < 0) {
-      console.error("Negative balance", account);
-      console.error("Die and contact Shelly");
+      console.error("Negative balance", account); // something went terribly wrong
       process.exit(1);
     }
     console.log(arc200_balanceOf, account);
