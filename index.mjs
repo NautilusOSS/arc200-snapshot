@@ -174,7 +174,7 @@ if (roundStr && !addr) {
       }
       if (to === addr) sum += BigInt(amount);
       if (from === addr) sum -= BigInt(amount);
-      console.log(from, "->", to, amount, sum.toString());
+      console.log(from, "->", to, Number(amount) / (10 ** Number(arc200_decimals)), amount, sum.toString());
     }
   }
   console.log("Balance", sum.toString());
